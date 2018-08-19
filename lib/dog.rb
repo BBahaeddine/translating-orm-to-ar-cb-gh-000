@@ -10,4 +10,6 @@ class Dog < ActiveRecord::Base
     dog = self.new(args)
     dog.save
   end
+  def find_ot_create_by
+  end
 end
