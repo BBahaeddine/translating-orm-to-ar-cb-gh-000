@@ -1,14 +1,15 @@
 class Dog < ActiveRecord::Base 
   attr_accessor :name, :breed 
   
-  def initialize(args = {})
-    @name = args[:name]
-    @breed = args[:breed]
+  def initialize(args)
+    # @name = args[:name] 
+    # @breed = args[:breed]
+    args.each {|key, value| self.send(("#{key}="), value)}
   end
   
   def self.create(args)
     dog = self.new(args)
-    dog.save
+    # dog.save
   end
   def find_or_create_by
   end
