@@ -1,5 +1,5 @@
 class Dog < ActiveRecord::Base 
-  attr_accessor :name, :breed 
+  attr_accessor :name, :breed, :id
   
   def initialize(args)
     # @name = args[:name] 
@@ -9,8 +9,16 @@ class Dog < ActiveRecord::Base
   
   def self.create(args)
     dog = self.new(args)
-    # dog.save
   end
+  
+  def save(args)
+    sql = <<-SQL 
+      INSERT INTO dogs(name, id) VALUES(?, ?)
+    SQL
+    DB[:conn].execute(args[:name], args[:breed])
+    self.id = DB[:conn].execute("SELECT last_inserted_id() FROM dogs")[0][0]
+  end
+  
   def find_or_create_by
   end
   
